@@ -1,0 +1,13 @@
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/model/PageAnomalyReport.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/model/PageConfiguration.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/service/ReportService.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/service/PageValidationService.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/controller/DashboardController.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/client/CmsClient.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/ArgusSchedulerApplication.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/repository/PageAnomalyReportRepository.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/client/ArgusCoreClient.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/controller/SchedulerController.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/repository/PageConfigurationRepository.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/model/ComponentInfo.java
+/Users/dushyant.gaur/argus/argus-ui-scheduler/src/main/java/com/argus/scheduler/service/SchedulerService.java

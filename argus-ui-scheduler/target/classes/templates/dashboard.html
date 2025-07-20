@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argus Dashboard - Banner Anomaly Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-shield-alt"></i> Argus - Banner Anomaly Detection
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a class="nav-link" href="/reports"><i class="fas fa-chart-bar"></i> Reports</a>
+                <a class="nav-link" href="/pages"><i class="fas fa-cog"></i> Pages</a>
+                <a class="nav-link" href="/health"><i class="fas fa-heartbeat"></i> Health</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-triangle"></i> <span th:text="${error}"></span>
+        </div>
+
+        <!-- Header Stats -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="card-title">Total Reports</div>
+                                <h3 th:text="${totalReports}">0</h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-file-alt fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="card-title">Total Anomalies</div>
+                                <h3 th:text="${totalAnomalies}">0</h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-exclamation-triangle fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="card-title">Recent Reports (24h)</div>
+                                <h3 th:text="${recentReportsCount}">0</h3>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-clock fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" th:classappend="${coreServiceHealthy} ? 'bg-success' : 'bg-danger'" class="text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="card-title">Core Service</div>
+                                <h5 th:text="${coreServiceHealthy} ? 'Healthy' : 'Down'">Status</h5>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas" th:classappend="${coreServiceHealthy} ? 'fa-check-circle' : 'fa-times-circle'" class="fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0"><i class="fas fa-bolt"></i> Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-primary me-2" onclick="runFullScan()">
+                            <i class="fas fa-play"></i> Run Full Scan
+                        </button>
+                        <button class="btn btn-outline-primary me-2" onclick="refreshDashboard()">
+                            <i class="fas fa-sync"></i> Refresh Dashboard
+                        </button>
+                        <a href="/reports" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-chart-bar"></i> View All Reports
+                        </a>
+                        <a href="/pages" class="btn btn-outline-secondary">
+                            <i class="fas fa-plus"></i> Manage Pages
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Reports -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0"><i class="fas fa-chart-line"></i> Recent Anomaly Reports</h5>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${#lists.isEmpty(recentReports)}" class="text-center text-muted py-4">
+                            <i class="fas fa-inbox fa-3x mb-3"></i>
+                            <p>No recent reports found. Run a scan to generate reports.</p>
+                        </div>
+                        <div th:if="${!#lists.isEmpty(recentReports)}" class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Page Name</th>
+                                        <th>Scan Time</th>
+                                        <th>Components</th>
+                                        <th>Anomalies</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="report : ${recentReports}">
+                                        <td>
+                                            <strong th:text="${report.pageName}">Page Name</strong>
+                                        </td>
+                                        <td th:text="${#temporals.format(report.scanTime, 'MMM dd, HH:mm')}">Scan Time</td>
+                                        <td>
+                                            <span th:text="${report.totalComponents}">0</span>
+                                            <small class="text-muted" th:if="${report.componentsWithAnomalies > 0}">
+                                                (<span th:text="${report.componentsWithAnomalies}">0</span> with issues)
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <span class="badge" 
+                                                  th:classappend="${report.totalAnomalies > 0} ? 'bg-warning' : 'bg-success'"
+                                                  th:text="${report.totalAnomalies}">0</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge" 
+                                                  th:classappend="${report.status == 'completed'} ? 'bg-success' : 'bg-danger'"
+                                                  th:text="${#strings.capitalize(report.status)}">Status</span>
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/reports/{id}(id=${report.id})}" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye"></i> View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Page Configuration Summary -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0"><i class="fas fa-list"></i> Configured Pages</h5>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${#lists.isEmpty(pages)}" class="text-center text-muted py-3">
+                            <i class="fas fa-file-plus fa-2x mb-2"></i>
+                            <p>No pages configured</p>
+                            <a href="/pages" class="btn btn-primary btn-sm">Add First Page</a>
+                        </div>
+                        <div th:if="${!#lists.isEmpty(pages)}">
+                            <div th:each="page : ${pages}" class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <strong th:text="${page.pageName}">Page Name</strong>
+                                    <br>
+                                    <small class="text-muted" th:text="${page.cmsUrl}">CMS URL</small>
+                                </div>
+                                <div>
+                                    <span class="badge" 
+                                          th:classappend="${page.active} ? 'bg-success' : 'bg-secondary'"
+                                          th:text="${page.active} ? 'Active' : 'Inactive'">Status</span>
+                                </div>
+                            </div>
+                            <hr>
+                            <a href="/pages" class="btn btn-sm btn-outline-primary w-100">
+                                <i class="fas fa-cog"></i> Manage Pages
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div class="modal fade" id="loadingModal" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2 mb-0">Running scan...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

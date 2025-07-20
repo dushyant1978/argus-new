@@ -1,0 +1,81 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+[32m :: Spring Boot :: [39m              [2m (v3.1.5)[0;39m
+
+23:06:53.409 [main] INFO  com.argus.core.ArgusCoreApplication - Starting ArgusCoreApplication using Java 24.0.1 with PID 45231 (/Users/dushyant.gaur/argus/argus-core/target/argus-core-1.0.0.jar started by dushyant.gaur in /Users/dushyant.gaur/argus)
+23:06:53.410 [main] INFO  com.argus.core.ArgusCoreApplication - The following 1 profile is active: "local"
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (jar:file:/Users/dushyant.gaur/argus/argus-core/target/argus-core-1.0.0.jar!/BOOT-INF/lib/tomcat-embed-core-10.1.15.jar!/)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+23:06:54.039 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+23:06:54.043 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+23:06:54.043 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+23:06:54.075 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+23:06:54.075 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 639 ms
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by io.netty.util.internal.PlatformDependent0$4 (jar:file:/Users/dushyant.gaur/argus/argus-core/target/argus-core-1.0.0.jar!/BOOT-INF/lib/netty-common-4.1.100.Final.jar!/)
+WARNING: Please consider reporting this to the maintainers of class io.netty.util.internal.PlatformDependent0$4
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+23:06:54.547 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 3 endpoint(s) beneath base path '/actuator'
+23:06:54.585 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+23:06:54.598 [main] INFO  com.argus.core.ArgusCoreApplication - Started ArgusCoreApplication in 1.417 seconds (process running for 1.618)
+23:06:55.042 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+23:06:55.042 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+23:06:55.043 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+23:07:08.134 [http-nio-8080-exec-2] INFO  c.a.c.c.AnomalyDetectionController - Received anomaly detection request: AnomalyRequest{bannerURL='https://assets.ajio.com/cms/AJIO/WEB/D-RHS-MHP-1.0-S1-mainbanners-P2-TheBearHouse-Cantabil-MIN60-01072025.jpg', curatedId=83}
+23:07:08.135 [http-nio-8080-exec-2] INFO  c.a.c.s.AnomalyDetectionService - Starting anomaly detection for: AnomalyRequest{bannerURL='https://assets.ajio.com/cms/AJIO/WEB/D-RHS-MHP-1.0-S1-mainbanners-P2-TheBearHouse-Cantabil-MIN60-01072025.jpg', curatedId=83}
+23:07:08.136 [http-nio-8080-exec-2] INFO  c.a.c.service.BannerAnalysisService - Starting banner analysis for URL: https://assets.ajio.com/cms/AJIO/WEB/D-RHS-MHP-1.0-S1-mainbanners-P2-TheBearHouse-Cantabil-MIN60-01072025.jpg
+23:07:08.136 [http-nio-8080-exec-2] INFO  c.argus.core.client.AnthropicClient - Analyzing banner: https://assets.ajio.com/cms/AJIO/WEB/D-RHS-MHP-1.0-S1-mainbanners-P2-TheBearHouse-Cantabil-MIN60-01072025.jpg
+23:07:08.282 [http-nio-8080-exec-2] ERROR i.n.r.d.DnsServerAddressStreamProviders - Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+23:07:23.115 [http-nio-8080-exec-2] INFO  c.argus.core.client.AnthropicClient - banner analysis result: {"id":"msg_01HpCfqTAbnFEPtMJPaUkDHF","type":"message","role":"assistant","model":"claude-sonnet-4-20250514","content":[{"type":"text","text":"```json\n{\n  \"brands\": [\"THE BEAR HOUSE\", \"CANTABIL\"],\n  \"discount\": {\n    \"text\": \"MIN. 60% OFF\",\n    \"range\": {\n      \"lower\": 60,\n      \"upper\": 100\n    }\n  },\n  \"analysis\": \"This is a promotional banner for smart shirts and t-shirts featuring two male models in a tropical setting. The banner prominently displays brand logos for 'THE BEAR HOUSE' and 'CANTABIL' with '& more' text, indicating additional brands are included. The main discount offer is 'MIN. 60% OFF' with a 'SHOP NOW' call-to-action button.\"\n}\n```"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":1043,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":166,"service_tier":"standard"}}
+23:07:23.120 [http-nio-8080-exec-2] INFO  c.a.c.service.BannerAnalysisService - Banner analysis completed: BannerInfo{brands=[THE BEAR HOUSE, CANTABIL], discountRange=DiscountRange{lower=60.0, upper=100.0}}
+23:07:23.120 [http-nio-8080-exec-2] INFO  c.argus.core.service.ProductService - Fetching products for curatedId: 83
+23:07:23.133 [http-nio-8080-exec-2] WARN  o.s.c.LocalVariableTableParameterNameDiscoverer - Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.argus.core.client.AjioProductClient
+23:07:23.134 [http-nio-8080-exec-2] INFO  c.a.core.client.AjioProductClient - Fetching products for curatedId: 83
+23:07:23.400 [http-nio-8080-exec-2] INFO  c.a.core.client.AjioProductClient - Successfully parsed 5 products
+23:07:23.400 [http-nio-8080-exec-2] INFO  c.argus.core.service.ProductService - Retrieved 5 products for curatedId: 83
+23:07:23.408 [http-nio-8080-exec-2] INFO  c.a.c.s.AnomalyDetectionService - Detected 5 anomalies out of 5 products
+23:07:23.408 [http-nio-8080-exec-2] INFO  c.a.c.s.AnomalyDetectionService - Found 5 total anomalies, returning first 5
+23:07:23.408 [http-nio-8080-exec-2] INFO  c.a.c.c.AnomalyDetectionController - Successfully processed anomaly detection request. Found 5 anomalies
+23:09:09.229 [http-nio-8080-exec-6] INFO  c.a.c.c.AnomalyDetectionController - Received anomaly detection request: AnomalyRequest{bannerURL='https://assets.ajio.com/cms/AJIO/WEB/D-RHS-MHP-1.0-S1-mainbanners-P2-TheBearHouse-Cantabil-MIN60-01072025.jpg', curatedId=83}
+23:09:09.230 [http-nio-8080-exec-6] INFO  c.a.c.s.AnomalyDetectionService - Starting anomaly detection for: AnomalyRequest{bannerURL='https://assets.ajio.com/cms/AJIO/WEB/D-RHS-MHP-1.0-S1-mainbanners-P2-TheBearHouse-Cantabil-MIN60-01072025.jpg', curatedId=83}
+23:09:09.230 [http-nio-8080-exec-6] INFO  c.a.c.service.BannerAnalysisService - Starting banner analysis for URL: https://assets.ajio.com/cms/AJIO/WEB/D-RHS-MHP-1.0-S1-mainbanners-P2-TheBearHouse-Cantabil-MIN60-01072025.jpg
+23:09:09.230 [http-nio-8080-exec-6] INFO  c.argus.core.client.AnthropicClient - Analyzing banner: https://assets.ajio.com/cms/AJIO/WEB/D-RHS-MHP-1.0-S1-mainbanners-P2-TheBearHouse-Cantabil-MIN60-01072025.jpg
+23:09:14.172 [http-nio-8080-exec-6] INFO  c.argus.core.client.AnthropicClient - banner analysis result: {"id":"msg_01PuQMEo9NeSNxBZd2kyT2bA","type":"message","role":"assistant","model":"claude-sonnet-4-20250514","content":[{"type":"text","text":"```json\n{\n  \"brands\": [\"THE BEAR HOUSE\", \"CANTABIL\"],\n  \"discount\": {\n    \"text\": \"MIN. 60% OFF\",\n    \"range\": {\n      \"lower\": 60,\n      \"upper\": 100\n    }\n  },\n  \"analysis\": \"This is a fashion banner advertising smart shirts and t-shirts with a minimum 60% discount. The image shows two male models in casual/semi-formal wear against a tropical background with palm trees. The brands featured are 'The Bear House' and 'Cantabil' along with '& more' indicating additional brands. There's a prominent 'SHOP NOW' call-to-action button.\"\n}\n```"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":1043,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":165,"service_tier":"standard"}}
+23:09:14.173 [http-nio-8080-exec-6] INFO  c.a.c.service.BannerAnalysisService - Banner analysis completed: BannerInfo{brands=[THE BEAR HOUSE, CANTABIL], discountRange=DiscountRange{lower=60.0, upper=100.0}}
+23:09:14.173 [http-nio-8080-exec-6] INFO  c.argus.core.service.ProductService - Fetching products for curatedId: 83
+23:09:14.174 [http-nio-8080-exec-6] INFO  c.argus.core.service.ProductService - Retrieved 5 products for curatedId: 83
+23:09:14.175 [http-nio-8080-exec-6] INFO  c.a.c.s.AnomalyDetectionService - Detected 5 anomalies out of 5 products
+23:09:14.175 [http-nio-8080-exec-6] INFO  c.a.c.s.AnomalyDetectionService - Found 5 total anomalies, returning first 5
+23:09:14.175 [http-nio-8080-exec-6] INFO  c.a.c.c.AnomalyDetectionController - Successfully processed anomaly detection request. Found 5 anomalies
+23:09:33.268 [http-nio-8080-exec-8] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unexpected character ('c' (code 99)): was expecting comma to separate Object entries]
+23:10:00.203 [http-nio-8080-exec-9] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unexpected character ('c' (code 99)): was expecting comma to separate Object entries]
+23:10:24.320 [http-nio-8080-exec-10] INFO  c.a.c.c.AnomalyDetectionController - Received anomaly detection request: AnomalyRequest{bannerURL='https://assets.ajio.com/cms/AJIO/WEB/D-GFS-UHP-1.0-S1-mainbanners-P3-uspa-skechers-min40-04072025.jpg', curatedId=83}
+23:10:24.320 [http-nio-8080-exec-10] INFO  c.a.c.s.AnomalyDetectionService - Starting anomaly detection for: AnomalyRequest{bannerURL='https://assets.ajio.com/cms/AJIO/WEB/D-GFS-UHP-1.0-S1-mainbanners-P3-uspa-skechers-min40-04072025.jpg', curatedId=83}
+23:10:24.320 [http-nio-8080-exec-10] INFO  c.a.c.service.BannerAnalysisService - Starting banner analysis for URL: https://assets.ajio.com/cms/AJIO/WEB/D-GFS-UHP-1.0-S1-mainbanners-P3-uspa-skechers-min40-04072025.jpg
+23:10:24.320 [http-nio-8080-exec-10] INFO  c.argus.core.client.AnthropicClient - Analyzing banner: https://assets.ajio.com/cms/AJIO/WEB/D-GFS-UHP-1.0-S1-mainbanners-P3-uspa-skechers-min40-04072025.jpg
+23:10:33.421 [http-nio-8080-exec-10] INFO  c.argus.core.client.AnthropicClient - banner analysis result: {"id":"msg_019RjUa8k2XdQ7WNfmqeVYpa","type":"message","role":"assistant","model":"claude-sonnet-4-20250514","content":[{"type":"text","text":"```json\n{\n  \"brands\": [\"U.S. POLO ASSN.\", \"SKECHERS\"],\n  \"discount\": {\n    \"text\": \"MIN. 40% OFF\",\n    \"range\": {\n      \"lower\": 40,\n      \"upper\": 100\n    }\n  },\n  \"analysis\": \"This is a sneakers promotional banner featuring 'Category Of The Day' for sneakers. The image shows three colorful sneakers (blue, silver, and yellow) on the left side. The right side displays brand logos for U.S. POLO ASSN. and SKECHERS with '& more' text, along with a minimum 40% off discount offer and a 'SHOP NOW' call-to-action button.\"\n}\n```"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":1043,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":179,"service_tier":"standard"}}
+23:10:33.421 [http-nio-8080-exec-10] INFO  c.a.c.service.BannerAnalysisService - Banner analysis completed: BannerInfo{brands=[U.S. POLO ASSN., SKECHERS], discountRange=DiscountRange{lower=40.0, upper=100.0}}
+23:10:33.422 [http-nio-8080-exec-10] INFO  c.argus.core.service.ProductService - Fetching products for curatedId: 83
+23:10:33.422 [http-nio-8080-exec-10] INFO  c.argus.core.service.ProductService - Retrieved 5 products for curatedId: 83
+23:10:33.423 [http-nio-8080-exec-10] INFO  c.a.c.s.AnomalyDetectionService - Detected 5 anomalies out of 5 products
+23:10:33.423 [http-nio-8080-exec-10] INFO  c.a.c.s.AnomalyDetectionService - Found 5 total anomalies, returning first 5
+23:10:33.423 [http-nio-8080-exec-10] INFO  c.a.c.c.AnomalyDetectionController - Successfully processed anomaly detection request. Found 5 anomalies
+23:11:19.459 [http-nio-8080-exec-3] INFO  c.a.c.c.AnomalyDetectionController - Received anomaly detection request: AnomalyRequest{bannerURL='https://assets.ajio.com/cms/AJIO/WEB/D-GFS-UHP-S2-TOPBANNER-P1-5090-30062025-main.jpg', curatedId=83}
+23:11:19.459 [http-nio-8080-exec-3] INFO  c.a.c.s.AnomalyDetectionService - Starting anomaly detection for: AnomalyRequest{bannerURL='https://assets.ajio.com/cms/AJIO/WEB/D-GFS-UHP-S2-TOPBANNER-P1-5090-30062025-main.jpg', curatedId=83}
+23:11:19.459 [http-nio-8080-exec-3] INFO  c.a.c.service.BannerAnalysisService - Starting banner analysis for URL: https://assets.ajio.com/cms/AJIO/WEB/D-GFS-UHP-S2-TOPBANNER-P1-5090-30062025-main.jpg
+23:11:19.459 [http-nio-8080-exec-3] INFO  c.argus.core.client.AnthropicClient - Analyzing banner: https://assets.ajio.com/cms/AJIO/WEB/D-GFS-UHP-S2-TOPBANNER-P1-5090-30062025-main.jpg
+23:11:29.451 [http-nio-8080-exec-3] INFO  c.argus.core.client.AnthropicClient - banner analysis result: {"id":"msg_01AXJrHwy5BF32ezivy8btwj","type":"message","role":"assistant","model":"claude-sonnet-4-20250514","content":[{"type":"text","text":"```json\n{\n  \"brands\": [],\n  \"discount\": {\n    \"text\": \"50-90% Off\",\n    \"range\": {\n      \"lower\": 50,\n      \"upper\": 90\n    }\n  },\n  \"analysis\": \"This is a fashion sale banner advertising a 'Giant Fashion Sale' starting July 4th. The banner features two models (a woman and a man) and promotes discounts of 50-90% off across 23,00,000+ styles from 6000+ brands. The main promotional text emphasizes 'THE ONLY THING SMALL ARE THE PRICE TAGS!' with a call-to-action button for 'WISHLIST NOW'. No specific brand names are visible in the image, only references to the number of brands available.\"\n}\n```"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":1043,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":184,"service_tier":"standard"}}
+23:11:29.453 [http-nio-8080-exec-3] INFO  c.a.c.service.BannerAnalysisService - Banner analysis completed: BannerInfo{brands=[], discountRange=DiscountRange{lower=50.0, upper=90.0}}
+23:11:29.453 [http-nio-8080-exec-3] INFO  c.argus.core.service.ProductService - Fetching products for curatedId: 83
+23:11:29.453 [http-nio-8080-exec-3] INFO  c.argus.core.service.ProductService - Retrieved 5 products for curatedId: 83
+23:11:29.453 [http-nio-8080-exec-3] INFO  c.a.c.s.AnomalyDetectionService - Detected 4 anomalies out of 5 products
+23:11:29.453 [http-nio-8080-exec-3] INFO  c.a.c.s.AnomalyDetectionService - Found 4 total anomalies, returning first 4
+23:11:29.453 [http-nio-8080-exec-3] INFO  c.a.c.c.AnomalyDetectionController - Successfully processed anomaly detection request. Found 4 anomalies

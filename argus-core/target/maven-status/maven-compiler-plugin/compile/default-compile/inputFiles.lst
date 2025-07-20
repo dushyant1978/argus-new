@@ -1,0 +1,12 @@
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/client/AnthropicClient.java
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/client/AjioProductClient.java
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/model/AnomalyRequest.java
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/service/BannerAnalysisService.java
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/model/Product.java
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/model/BannerInfo.java
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/service/AnomalyDetectionService.java
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/controller/AnomalyDetectionController.java
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/service/ProductService.java
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/config/ApplicationConfig.java
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/ArgusCoreApplication.java
+/Users/dushyant.gaur/argus/argus-core/src/main/java/com/argus/core/model/AnomalyResponse.java

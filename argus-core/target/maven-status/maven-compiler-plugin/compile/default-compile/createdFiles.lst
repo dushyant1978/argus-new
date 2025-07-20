@@ -1,0 +1,16 @@
+com/argus/core/model/Product.class
+com/argus/core/service/BannerAnalysisService.class
+com/argus/core/client/AnthropicClient$BannerAnalysisResult.class
+com/argus/core/ArgusCoreApplication.class
+com/argus/core/service/AnomalyDetectionService.class
+com/argus/core/config/ApplicationConfig.class
+com/argus/core/service/ProductService.class
+com/argus/core/model/AnomalyRequest.class
+com/argus/core/model/Product$FnlColorVariantData.class
+com/argus/core/client/AjioProductClient.class
+com/argus/core/model/AnomalyResponse.class
+com/argus/core/client/AnthropicClient.class
+com/argus/core/controller/AnomalyDetectionController.class
+com/argus/core/model/BannerInfo$DiscountRange.class
+com/argus/core/model/BannerInfo.class
+com/argus/core/model/AnomalyResponse$ProductAnomaly.class
