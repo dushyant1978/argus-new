@@ -1,0 +1,59 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: argus-core
+  cache:
+    type: simple
+    cache-names:
+      - bannerAnalysis
+      - products
+  jackson:
+    serialization:
+      indent-output: true
+
+# Anthropic API Configuration
+anthropic:
+  api:
+    key: YOUR_ANTHROPIC_API_KEY
+    url: https://api.anthropic.com
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true
+
+# Application Information
+info:
+  app:
+    name: Argus Core
+    description: Banner Anomaly Detection Core API
+    version: 1.0.0
+
+# Logging Configuration
+logging:
+  level:
+    com.argus: INFO
+    org.springframework.web: INFO
+    org.springframework.cache: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n"
+
+# HTTP Client Configuration
+spring.webflux:
+  timeout:
+    connect: 30s
+    read: 30s
+    write: 30s

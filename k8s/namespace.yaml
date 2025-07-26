@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argus
+  labels:
+    name: argus
+    app: banner-anomaly-detection
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argus-secrets
+  namespace: argus
+type: Opaque
+stringData:
+  anthropic-api-key: "YOUR_ANTHROPIC_API_KEY"
