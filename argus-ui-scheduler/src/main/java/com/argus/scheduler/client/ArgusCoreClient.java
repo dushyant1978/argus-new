@@ -30,7 +30,7 @@ public class ArgusCoreClient {
         this.objectMapper = objectMapper;
     }
 
-    public JsonNode detectAnomalies(String bannerURL, Long curatedId) {
+    public JsonNode detectAnomalies(String bannerURL, String curatedId) {
         try {
             logger.info("Calling argus-core for anomaly detection: bannerURL={}, curatedId={}", bannerURL, curatedId);
             
@@ -62,11 +62,11 @@ public class ArgusCoreClient {
         }
     }
 
-    private String createFallbackResponse(String bannerURL, Long curatedId) {
+    private String createFallbackResponse(String bannerURL, String curatedId) {
         return String.format("""
             {
                 "bannerURL": "%s",
-                "curatedId": %d,
+                "curatedId": "%s",
                 "bannerInfo": {
                     "brands": ["Nike", "Adidas", "Puma", "Reebok"],
                     "discountRange": {

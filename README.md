@@ -75,7 +75,7 @@ Detect anomalies in banner advertisements.
 ```json
 {
   "bannerURL": "https://example.com/banner.jpg",
-  "curatedId": 83
+  "curatedId": "83"
 }
 ```
 
@@ -83,7 +83,7 @@ Detect anomalies in banner advertisements.
 ```json
 {
   "bannerURL": "https://example.com/banner.jpg",
-  "curatedId": 83,
+  "curatedId": "83",
   "bannerInfo": {
     "brands": ["Nike", "Adidas", "Puma"],
     "discountRange": {
@@ -306,7 +306,7 @@ curl -X POST http://localhost:8080/api/v1/anomaly/detect \
   -H "Content-Type: application/json" \
   -d '{
     "bannerURL": "https://example.com/banner.jpg",
-    "curatedId": 83
+    "curatedId": "83"
   }'
 
 # Trigger manual scan
