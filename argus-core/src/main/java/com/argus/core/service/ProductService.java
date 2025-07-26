@@ -17,7 +17,7 @@ public class ProductService {
     @Autowired
     private AjioProductClient ajioProductClient;
 
-    public List<Product> getProducts(Long curatedId) {
+    public List<Product> getProducts(String curatedId) {
         logger.info("Fetching products for curatedId: {}", curatedId);
         
         List<Product> products = ajioProductClient.getProducts(curatedId);

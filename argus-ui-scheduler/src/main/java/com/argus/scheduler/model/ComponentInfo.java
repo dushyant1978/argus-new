@@ -3,12 +3,12 @@ package com.argus.scheduler.model;
 public class ComponentInfo {
     
     private String bannerURL;
-    private Long curatedId;
+    private String curatedId;
     private String componentType;
     
     public ComponentInfo() {}
     
-    public ComponentInfo(String bannerURL, Long curatedId, String componentType) {
+    public ComponentInfo(String bannerURL, String curatedId, String componentType) {
         this.bannerURL = bannerURL;
         this.curatedId = curatedId;
         this.componentType = componentType;
@@ -22,11 +22,11 @@ public class ComponentInfo {
         this.bannerURL = bannerURL;
     }
 
-    public Long getCuratedId() {
+    public String getCuratedId() {
         return curatedId;
     }
 
-    public void setCuratedId(Long curatedId) {
+    public void setCuratedId(String curatedId) {
         this.curatedId = curatedId;
     }
 
@@ -42,7 +42,7 @@ public class ComponentInfo {
     public String toString() {
         return "ComponentInfo{" +
                 "bannerURL='" + bannerURL + '\'' +
-                ", curatedId=" + curatedId +
+                ", curatedId='" + curatedId + '\'' +
                 ", componentType='" + componentType + '\'' +
                 '}';
     }

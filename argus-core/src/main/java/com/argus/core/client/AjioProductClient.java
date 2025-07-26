@@ -32,12 +32,10 @@ public class AjioProductClient {
     }
 
     @Cacheable(value = "products", key = "#curatedId")
-    public List<Product> getProducts(Long curatedId) {
+    public List<Product> getProducts(String curatedId) {
         try {
-            logger.info("Fetching products for curatedId: {}", curatedId);
-            
             String url = AJIO_API_BASE + "?curatedid=" + curatedId;
-            
+            logger.info("Fetching products for curatedId: {}", url);
             String response = webClient.get()
                     .uri(url)
                     .header("User-Agent", "Argus-Banner-Detection-Service/1.0")
@@ -66,7 +64,18 @@ public class AjioProductClient {
                 for (JsonNode productNode : productsNode) {
                     Product product = new Product();
                     product.setCode(productNode.path("code").asText());
-                    product.setDiscountPercent(productNode.path("discountPercent").asDouble(0.0));
+                    //product.setDiscountPercent(productNode.path("discountPercent").asDouble(0.0));
+
+                    String discountStr = productNode.path("discountPercent").asText("");
+                    double discountPercent = 0.0;
+                    if (!discountStr.isEmpty()) {
+                        // Extract digits from a string like "71% off"
+                        String digits = discountStr.replaceAll("[^\\d.]+", "");
+                        if (!digits.isEmpty()) {
+                            discountPercent = Double.parseDouble(digits);
+                        }
+                    }
+                    product.setDiscountPercent(discountPercent);                    
                     
                     JsonNode fnlNode = productNode.path("fnlColorVariantData");
                     if (!fnlNode.isMissingNode()) {

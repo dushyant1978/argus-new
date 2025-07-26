@@ -57,10 +57,10 @@ public class CmsClient {
             if (componentsNode.isArray()) {
                 for (JsonNode componentNode : componentsNode) {
                     String bannerURL = componentNode.path("bannerURL").asText();
-                    Long curatedId = componentNode.path("curatedId").asLong();
+                    String curatedId = componentNode.path("curatedId").asText();
                     String componentType = componentNode.path("type").asText("banner");
                     
-                    if (!bannerURL.isEmpty() && curatedId > 0) {
+                    if (!bannerURL.isEmpty() && !curatedId.isEmpty()) {
                         components.add(new ComponentInfo(bannerURL, curatedId, componentType));
                     }
                 }
@@ -81,17 +81,17 @@ public class CmsClient {
                 "components": [
                     {
                         "bannerURL": "https://assets.ajio.com/medias/sys_master/root/20240101/banner1.jpg",
-                        "curatedId": 83,
+                        "curatedId": "83",
                         "type": "banner"
                     },
                     {
                         "bannerURL": "https://assets.ajio.com/medias/sys_master/root/20240101/banner2.jpg", 
-                        "curatedId": 84,
+                        "curatedId": "84",
                         "type": "banner"
                     },
                     {
                         "bannerURL": "https://assets.ajio.com/medias/sys_master/root/20240101/banner3.jpg",
-                        "curatedId": 85,
+                        "curatedId": "85",
                         "type": "banner"
                     }
                 ]
@@ -105,17 +105,17 @@ public class CmsClient {
         List<ComponentInfo> components = new ArrayList<>();
         components.add(new ComponentInfo(
                 "https://assets.ajio.com/medias/sys_master/root/20240101/banner1.jpg", 
-                83L, 
+                "83", 
                 "banner"
         ));
         components.add(new ComponentInfo(
                 "https://assets.ajio.com/medias/sys_master/root/20240101/banner2.jpg", 
-                84L, 
+                "84", 
                 "banner"
         ));
         components.add(new ComponentInfo(
                 "https://assets.ajio.com/medias/sys_master/root/20240101/banner3.jpg", 
-                85L, 
+                "85", 
                 "banner"
         ));
         

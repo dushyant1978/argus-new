@@ -8,12 +8,12 @@ public class AnomalyRequest {
     @NotBlank(message = "Banner URL is required")
     private String bannerURL;
     
-    @NotNull(message = "Curated ID is required")
-    private Long curatedId;
+    @NotBlank(message = "Curated ID is required")
+    private String curatedId;
 
     public AnomalyRequest() {}
 
-    public AnomalyRequest(String bannerURL, Long curatedId) {
+    public AnomalyRequest(String bannerURL, String curatedId) {
         this.bannerURL = bannerURL;
         this.curatedId = curatedId;
     }
@@ -26,11 +26,11 @@ public class AnomalyRequest {
         this.bannerURL = bannerURL;
     }
 
-    public Long getCuratedId() {
+    public String getCuratedId() {
         return curatedId;
     }
 
-    public void setCuratedId(Long curatedId) {
+    public void setCuratedId(String curatedId) {
         this.curatedId = curatedId;
     }
 
@@ -38,7 +38,7 @@ public class AnomalyRequest {
     public String toString() {
         return "AnomalyRequest{" +
                 "bannerURL='" + bannerURL + '\'' +
-                ", curatedId=" + curatedId +
+                ", curatedId='" + curatedId + '\'' +
                 '}';
     }
 }

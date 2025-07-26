@@ -5,7 +5,7 @@ import java.util.List;
 public class AnomalyResponse {
     
     private String bannerURL;
-    private Long curatedId;
+    private String curatedId;
     private BannerInfo bannerInfo;
     private List<ProductAnomaly> anomalies;
     private int totalAnomalies;
@@ -14,7 +14,7 @@ public class AnomalyResponse {
     
     public AnomalyResponse() {}
     
-    public AnomalyResponse(String bannerURL, Long curatedId, BannerInfo bannerInfo, 
+    public AnomalyResponse(String bannerURL, String curatedId, BannerInfo bannerInfo, 
                           List<ProductAnomaly> anomalies) {
         this.bannerURL = bannerURL;
         this.curatedId = curatedId;
@@ -32,11 +32,11 @@ public class AnomalyResponse {
         this.bannerURL = bannerURL;
     }
 
-    public Long getCuratedId() {
+    public String getCuratedId() {
         return curatedId;
     }
 
-    public void setCuratedId(Long curatedId) {
+    public void setCuratedId(String curatedId) {
         this.curatedId = curatedId;
     }
 
