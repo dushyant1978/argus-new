@@ -112,7 +112,7 @@ public class SchedulerController {
         logger.info("Creating new page: {}", request.getPageName());
         
         try {
-            PageConfiguration page = pageValidationService.createPage(request.getPageName(), request.getCmsUrl());
+            PageConfiguration page = pageValidationService.createPage(request.getPageName(), request.getPageId());
             return ResponseEntity.status(HttpStatus.CREATED).body(page);
             
         } catch (IllegalArgumentException e) {
@@ -146,7 +146,7 @@ public class SchedulerController {
         
         try {
             PageConfiguration page = pageValidationService.updatePage(
-                    id, request.getPageName(), request.getCmsUrl(), request.getActive());
+                    id, request.getPageName(), request.getPageId(), request.getActive());
             return ResponseEntity.ok(page);
             
         } catch (IllegalArgumentException e) {
@@ -206,23 +206,23 @@ public class SchedulerController {
 
     public static class CreatePageRequest {
         private String pageName;
-        private String cmsUrl;
+        private String pageId;
 
         public String getPageName() { return pageName; }
         public void setPageName(String pageName) { this.pageName = pageName; }
-        public String getCmsUrl() { return cmsUrl; }
-        public void setCmsUrl(String cmsUrl) { this.cmsUrl = cmsUrl; }
+        public String getPageId() { return pageId; }
+        public void setPageId(String pageId) { this.pageId = pageId; }
     }
 
     public static class UpdatePageRequest {
         private String pageName;
-        private String cmsUrl;
+        private String pageId;
         private Boolean active;
 
         public String getPageName() { return pageName; }
         public void setPageName(String pageName) { this.pageName = pageName; }
-        public String getCmsUrl() { return cmsUrl; }
-        public void setCmsUrl(String cmsUrl) { this.cmsUrl = cmsUrl; }
+        public String getPageId() { return pageId; }
+        public void setPageId(String pageId) { this.pageId = pageId; }
         public Boolean getActive() { return active; }
         public void setActive(Boolean active) { this.active = active; }
     }

@@ -61,11 +61,11 @@ public class SchedulerService {
     }
 
     private void scanPage(PageConfiguration page) {
-        logger.info("Scanning page: {} ({})", page.getPageName(), page.getCmsUrl());
+        logger.info("Scanning page: {} ({})", page.getPageName(), page.getPageId());
         
         try {
             // Get components from CMS
-            List<ComponentInfo> components = cmsClient.getPageComponents(page.getCmsUrl());
+            List<ComponentInfo> components = cmsClient.getPageComponents(page.getPageId());
             
             if (components.isEmpty()) {
                 logger.warn("No components found for page: {}", page.getPageName());
@@ -115,7 +115,7 @@ public class SchedulerService {
             
             PageAnomalyReport report = new PageAnomalyReport(
                     page.getPageName(),
-                    page.getCmsUrl(),
+                    page.getPageId(),
                     components.size(),
                     componentsWithAnomalies,
                     totalAnomalies,
@@ -134,7 +134,7 @@ public class SchedulerService {
             // Save error report
             PageAnomalyReport errorReport = new PageAnomalyReport(
                     page.getPageName(),
-                    page.getCmsUrl(),
+                    page.getPageId(),
                     0,
                     0,
                     0,

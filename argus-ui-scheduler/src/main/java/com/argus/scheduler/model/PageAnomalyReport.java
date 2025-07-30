@@ -13,7 +13,7 @@ public class PageAnomalyReport {
     private Long id;
     
     private String pageName;
-    private String cmsUrl;
+    private String pageId;
     private int totalComponents;
     private int componentsWithAnomalies;
     private int totalAnomalies;
@@ -28,11 +28,11 @@ public class PageAnomalyReport {
     
     public PageAnomalyReport() {}
     
-    public PageAnomalyReport(String pageName, String cmsUrl, int totalComponents, 
+    public PageAnomalyReport(String pageName, String pageId, int totalComponents, 
                            int componentsWithAnomalies, int totalAnomalies, 
                            String reportData, String status) {
         this.pageName = pageName;
-        this.cmsUrl = cmsUrl;
+        this.pageId = pageId;
         this.totalComponents = totalComponents;
         this.componentsWithAnomalies = componentsWithAnomalies;
         this.totalAnomalies = totalAnomalies;
@@ -62,12 +62,12 @@ public class PageAnomalyReport {
         this.pageName = pageName;
     }
 
-    public String getCmsUrl() {
-        return cmsUrl;
+    public String getPageId() {
+        return pageId;
     }
 
-    public void setCmsUrl(String cmsUrl) {
-        this.cmsUrl = cmsUrl;
+    public void setPageId(String pageId) {
+        this.pageId = pageId;
     }
 
     public int getTotalComponents() {
@@ -123,7 +123,7 @@ public class PageAnomalyReport {
         return "PageAnomalyReport{" +
                 "id=" + id +
                 ", pageName='" + pageName + '\'' +
-                ", cmsUrl='" + cmsUrl + '\'' +
+                ", pageId='" + pageId + '\'' +
                 ", totalComponents=" + totalComponents +
                 ", componentsWithAnomalies=" + componentsWithAnomalies +
                 ", totalAnomalies=" + totalAnomalies +

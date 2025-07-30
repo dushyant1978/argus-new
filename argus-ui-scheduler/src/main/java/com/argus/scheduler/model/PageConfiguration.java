@@ -17,8 +17,8 @@ public class PageConfiguration {
     @NotBlank(message = "Page name is required")
     private String pageName;
     
-    @NotBlank(message = "CMS URL is required")
-    private String cmsUrl;
+    @NotBlank(message = "Page ID is required")
+    private String pageId;
     
     @NotNull
     private Boolean active = true;
@@ -31,9 +31,9 @@ public class PageConfiguration {
     
     public PageConfiguration() {}
     
-    public PageConfiguration(String pageName, String cmsUrl) {
+    public PageConfiguration(String pageName, String pageId) {
         this.pageName = pageName;
-        this.cmsUrl = cmsUrl;
+        this.pageId = pageId;
         this.active = true;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
@@ -66,12 +66,12 @@ public class PageConfiguration {
         this.pageName = pageName;
     }
 
-    public String getCmsUrl() {
-        return cmsUrl;
+    public String getPageId() {
+        return pageId;
     }
 
-    public void setCmsUrl(String cmsUrl) {
-        this.cmsUrl = cmsUrl;
+    public void setPageId(String pageId) {
+        this.pageId = pageId;
     }
 
     public Boolean getActive() {
@@ -103,7 +103,7 @@ public class PageConfiguration {
         return "PageConfiguration{" +
                 "id=" + id +
                 ", pageName='" + pageName + '\'' +
-                ", cmsUrl='" + cmsUrl + '\'' +
+                ", pageId='" + pageId + '\'' +
                 ", active=" + active +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +

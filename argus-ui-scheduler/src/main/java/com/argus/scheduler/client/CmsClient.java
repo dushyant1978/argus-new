@@ -27,13 +27,24 @@ public class CmsClient {
         this.objectMapper = objectMapper;
     }
 
-    public List<ComponentInfo> getPageComponents(String cmsUrl) {
+    public List<ComponentInfo> getPageComponents(String pageId) {
         try {
-            logger.info("Fetching components from CMS URL: {}", cmsUrl);
+            logger.info("Fetching components from CMS for pageId: {}", pageId);
             
-            String response = webClient.get()
-                    .uri(cmsUrl)
-                    .header("User-Agent", "Argus-Scheduler-Service/1.0")
+            // Create the request body for CMS API
+            String requestBody = createCmsRequestBody(pageId);
+            
+            String response = webClient.post()
+                    .uri("https://cms-edge.services.ajio.com/storefront/cms/page")
+                    .header("ad_id", "4ae84593-ce0b-4dbf-933a-b43b481628af")
+                    .header("userCohortValues", "")
+                    .header("Accept-Charset", "UTF-8")
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .header("User-Agent", "Android")
+                    .header("client_type", "Android")
+                    .header("client_version", "9.23000.0")
+                    .bodyValue(requestBody)
                     .retrieve()
                     .bodyToMono(String.class)
                     .timeout(Duration.ofSeconds(30))
@@ -46,6 +57,29 @@ public class CmsClient {
             logger.error("Error fetching components from CMS: {}", e.getMessage());
             return createFallbackComponents();
         }
+    }
+
+    private String createCmsRequestBody(String pageId) {
+        return String.format("""
+            {
+                "appVersion": "9.23000.0",
+                "userStatus": "NON_LOGGED_IN",
+                "apiVersion": "v3",
+                "experiments": [
+                    "CMSABExp4",
+                    "CMSABExp5",
+                    "CMSABExp6",
+                    "CMSABExp7",
+                    "CMSABExp8",
+                    "CMSABExp10"
+                ],
+                "channel": "Android",
+                "tenantId": "AJIO",
+                "pageUrl": "%s",
+                "store": "AJIO",
+                "platform": "MOBILE"
+            }
+            """, pageId);
     }
 
     private List<ComponentInfo> parseCmsResponse(String response) {

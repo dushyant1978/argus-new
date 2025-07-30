@@ -31,16 +31,16 @@ public class PageValidationService {
         return pageConfigRepository.save(page);
     }
 
-    public PageConfiguration createPage(String pageName, String cmsUrl) {
+    public PageConfiguration createPage(String pageName, String pageId) {
         if (pageConfigRepository.existsByPageName(pageName)) {
             throw new IllegalArgumentException("Page with name '" + pageName + "' already exists");
         }
         
-        PageConfiguration page = new PageConfiguration(pageName, cmsUrl);
+        PageConfiguration page = new PageConfiguration(pageName, pageId);
         return pageConfigRepository.save(page);
     }
 
-    public PageConfiguration updatePage(Long id, String pageName, String cmsUrl, Boolean active) {
+    public PageConfiguration updatePage(Long id, String pageName, String pageId, Boolean active) {
         Optional<PageConfiguration> existingPage = pageConfigRepository.findById(id);
         if (existingPage.isEmpty()) {
             throw new IllegalArgumentException("Page with id " + id + " not found");
@@ -48,7 +48,7 @@ public class PageValidationService {
         
         PageConfiguration page = existingPage.get();
         page.setPageName(pageName);
-        page.setCmsUrl(cmsUrl);
+        page.setPageId(pageId);
         page.setActive(active);
         
         return pageConfigRepository.save(page);
