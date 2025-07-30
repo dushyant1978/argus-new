@@ -83,20 +83,42 @@ public class CmsClient {
     }
 
     private List<ComponentInfo> parseCmsResponse(String response) {
-       logger.info("Parsing CMS response: {}", response);
+        logger.info("Parsing CMS response: {}", response);
         try {
             JsonNode rootNode = objectMapper.readTree(response);
             List<ComponentInfo> components = new ArrayList<>();
             
-            JsonNode componentsNode = rootNode.path("components");
-            if (componentsNode.isArray()) {
-                for (JsonNode componentNode : componentsNode) {
-                    String bannerURL = componentNode.path("bannerURL").asText();
-                    String curatedId = componentNode.path("curatedId").asText();
-                    String componentType = componentNode.path("type").asText("banner");
+            // Navigate to data.page.slots
+            JsonNode dataNode = rootNode.path("data");
+            JsonNode pageNode = dataNode.path("page");
+            JsonNode slotsNode = pageNode.path("slots");
+            
+            if (slotsNode.isArray()) {
+                for (JsonNode slotNode : slotsNode) {
+                    JsonNode componentNode = slotNode.path("component");
+                    if (componentNode.isMissingNode()) {
+                        continue;
+                    }
                     
-                    if (!bannerURL.isEmpty() && !curatedId.isEmpty()) {
-                        components.add(new ComponentInfo(bannerURL, curatedId, componentType));
+                    String componentName = componentNode.path("componentName").asText();
+                    JsonNode bannersNode = componentNode.path("banners");
+                    
+                    if (bannersNode.isArray()) {
+                        for (JsonNode bannerNode : bannersNode) {
+                            String bannerUrl = bannerNode.path("bannerUrl").asText();
+                            JsonNode hotspotsNode = bannerNode.path("hotspots");
+                            
+                            if (hotspotsNode.isArray() && !hotspotsNode.isEmpty()) {
+                                // Take the first hotspot's hotspotUrl as curatedId
+                                String curatedId = hotspotsNode.get(0).path("hotspotUrl").asText();
+                                
+                                if (!bannerUrl.isEmpty() && !curatedId.isEmpty()) {
+                                    components.add(new ComponentInfo(bannerUrl, curatedId, componentName));
+                                    logger.debug("Added component: bannerUrl={}, curatedId={}, componentType={}", 
+                                               bannerUrl, curatedId, componentName);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -105,7 +127,7 @@ public class CmsClient {
             return components;
             
         } catch (Exception e) {
-            logger.error("Error parsing CMS response: {}", e.getMessage());
+            logger.error("Error parsing CMS response: {}", e.getMessage(), e);
             return createFallbackComponents();
         }
     }
@@ -113,23 +135,52 @@ public class CmsClient {
     private String createFallbackCmsResponse() {
         return """
             {
-                "components": [
-                    {
-                        "bannerURL": "https://assets.ajio.com/medias/sys_master/root/20240101/banner1.jpg",
-                        "curatedId": "83",
-                        "type": "banner"
-                    },
-                    {
-                        "bannerURL": "https://assets.ajio.com/medias/sys_master/root/20240101/banner2.jpg", 
-                        "curatedId": "84",
-                        "type": "banner"
-                    },
-                    {
-                        "bannerURL": "https://assets.ajio.com/medias/sys_master/root/20240101/banner3.jpg",
-                        "curatedId": "85",
-                        "type": "banner"
+                "status": {
+                    "statusCode": 0,
+                    "messageDescription": "page details fetched successfully",
+                    "errorCode": "OK"
+                },
+                "data": {
+                    "page": {
+                        "pageName": "Fallback Page",
+                        "platform": "MOBILE",
+                        "store": "AJIO",
+                        "slots": [
+                            {
+                                "rowNumber": 1,
+                                "component": {
+                                    "componentName": "FALLBACK-BANNER",
+                                    "banners": [
+                                        {
+                                            "bannerUrl": "https://assets.ajio.com/medias/sys_master/root/20240101/banner1.jpg",
+                                            "hotspots": [
+                                                {
+                                                    "hotspotUrl": "/shop/fallback1"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "bannerUrl": "https://assets.ajio.com/medias/sys_master/root/20240101/banner2.jpg",
+                                            "hotspots": [
+                                                {
+                                                    "hotspotUrl": "/shop/fallback2"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "bannerUrl": "https://assets.ajio.com/medias/sys_master/root/20240101/banner3.jpg",
+                                            "hotspots": [
+                                                {
+                                                    "hotspotUrl": "/shop/fallback3"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
                     }
-                ]
+                }
             }
             """;
     }
@@ -140,18 +191,18 @@ public class CmsClient {
         List<ComponentInfo> components = new ArrayList<>();
         components.add(new ComponentInfo(
                 "https://assets.ajio.com/medias/sys_master/root/20240101/banner1.jpg", 
-                "83", 
-                "banner"
+                "/shop/fallback1", 
+                "FALLBACK-BANNER"
         ));
         components.add(new ComponentInfo(
                 "https://assets.ajio.com/medias/sys_master/root/20240101/banner2.jpg", 
-                "84", 
-                "banner"
+                "/shop/fallback2", 
+                "FALLBACK-BANNER"
         ));
         components.add(new ComponentInfo(
                 "https://assets.ajio.com/medias/sys_master/root/20240101/banner3.jpg", 
-                "85", 
-                "banner"
+                "/shop/fallback3", 
+                "FALLBACK-BANNER"
         ));
         
         return components;
