@@ -34,7 +34,8 @@ public class AjioProductClient {
     @Cacheable(value = "products", key = "#curatedId")
     public List<Product> getProducts(String curatedId) {
         try {
-            String url = AJIO_API_BASE + "?curatedid=" + curatedId;
+            String encodedCuratedId = java.net.URLEncoder.encode(curatedId, "UTF-8");
+            String url = AJIO_API_BASE + "?curatedid=" + encodedCuratedId;
             logger.info("Fetching products for curatedId: {}", url);
             String response = webClient.get()
                     .uri(url)

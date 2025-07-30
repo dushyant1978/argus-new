@@ -11,6 +11,12 @@ spring:
     cache-names:
       - bannerAnalysis
       - products
+    simple:
+      cache-names:
+        bannerAnalysis:
+          ttl: 3600s  # 1 hour
+        products:
+          ttl: 1800s  # 30 minutes
   jackson:
     serialization:
       indent-output: true
