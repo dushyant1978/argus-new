@@ -162,28 +162,28 @@
                                             <code th:text="${detail?.curatedId ?: 'N/A'}">Curated ID</code>
                                         </td>
                                         <td>
-                                            <span th:if="${detail?.error}" class="text-danger">
+                                            <span th:if="${detail.containsKey('error')}" class="text-danger">
                                                 <i class="fas fa-exclamation-triangle"></i> Error: <span th:text="${detail.error}">Error</span>
                                             </span>
-                                            <span th:unless="${detail?.error}">
+                                            <span th:unless="${detail.containsKey('error')}">
                                                 <span class="badge" 
                                                       th:classappend="${detail?.anomalyResult?.anomalyType == 'HIGH'} ? 'bg-danger' : (${detail?.anomalyResult?.anomalyType == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
                                                       th:text="${detail?.anomalyResult?.anomalyType ?: 'N/A'}">Anomaly Type</span>
                                             </span>
                                         </td>
                                         <td>
-                                            <span th:if="${detail?.error}" class="text-danger">
+                                            <span th:if="${detail.containsKey('error')}" class="text-danger">
                                                 <span class="badge bg-danger">ERROR</span>
                                             </span>
-                                            <span th:unless="${detail?.error}">
+                                            <span th:unless="${detail.containsKey('error')}">
                                                 <span class="badge" 
                                                       th:classappend="${detail?.anomalyResult?.severity == 'HIGH'} ? 'bg-danger' : (${detail?.anomalyResult?.severity == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
                                                       th:text="${detail?.anomalyResult?.severity ?: 'N/A'}">Severity</span>
                                             </span>
                                         </td>
                                         <td>
-                                            <span th:if="${detail?.error}" class="text-danger" th:text="${detail.error}">Error Description</span>
-                                            <span th:unless="${detail?.error}" th:text="${detail?.anomalyResult?.description ?: 'No description available'}">Description</span>
+                                            <span th:if="${detail.containsKey('error')}" class="text-danger" th:text="${detail.error}">Error Description</span>
+                                            <span th:unless="${detail.containsKey('error')}" th:text="${detail?.anomalyResult?.description ?: 'No description available'}">Description</span>
                                         </td>
                                     </tr>
                                 </tbody>
