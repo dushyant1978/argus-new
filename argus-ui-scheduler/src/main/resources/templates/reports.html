@@ -113,7 +113,7 @@
                                         <td>
                                             <strong th:text="${report.pageName}">Page Name</strong>
                                             <br>
-                                            <small class="text-muted" th:text="${#strings.abbreviate(report.cmsUrl, 50)}">CMS URL</small>
+                                            <small class="text-muted" th:text="${report.pageId}">Page ID</small>
                                         </td>
                                         <td th:text="${#temporals.format(report.scanTime, 'MMM dd, yyyy HH:mm')}">Scan Time</td>
                                         <td>

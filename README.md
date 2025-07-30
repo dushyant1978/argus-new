@@ -127,7 +127,7 @@ Create a new page configuration.
 ```json
 {
   "pageName": "Homepage",
-  "cmsUrl": "https://cms.example.com/api/homepage"
+  "pageId": "/homepage"
 }
 ```
 
