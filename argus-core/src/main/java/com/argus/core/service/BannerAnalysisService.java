@@ -1,6 +1,6 @@
 package com.argus.core.service;
 
-import com.argus.core.client.AnthropicClient;
+import com.argus.core.client.OpenAIClient;
 import com.argus.core.model.BannerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +13,12 @@ public class BannerAnalysisService {
     private static final Logger logger = LoggerFactory.getLogger(BannerAnalysisService.class);
     
     @Autowired
-    private AnthropicClient anthropicClient;
+    private OpenAIClient openAIClient;
 
     public BannerInfo analyzeBanner(String bannerUrl) {
         logger.info("Starting banner analysis for URL: {}", bannerUrl);
         
-        AnthropicClient.BannerAnalysisResult result = anthropicClient.analyzeBanner(bannerUrl);
+        OpenAIClient.BannerAnalysisResult result = openAIClient.analyzeBanner(bannerUrl);
         
         BannerInfo.DiscountRange discountRange = new BannerInfo.DiscountRange(
                 result.getLowerDiscount(), 

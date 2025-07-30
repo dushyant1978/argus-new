@@ -20,9 +20,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 @Component
-public class AnthropicClient {
+public class OpenAIClient {
 
-    private static final Logger logger = LoggerFactory.getLogger(AnthropicClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(OpenAIClient.class);
     
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
@@ -31,7 +31,7 @@ public class AnthropicClient {
     private static final String OPENAI_API_KEY = "YOUR_OPENAI_API_KEY";
     private static final String OPENAI_API_URL = "https://llm-gateway.fynd.engineering/v1/chat/completions";
 
-    public AnthropicClient(WebClient.Builder webClientBuilder, ObjectMapper objectMapper) {
+    public OpenAIClient(WebClient.Builder webClientBuilder, ObjectMapper objectMapper) {
         this.webClient = webClientBuilder
                 .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(10 * 1024 * 1024))
                 .build();
