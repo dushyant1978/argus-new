@@ -65,7 +65,7 @@
                                 <thead>
                                     <tr>
                                         <th>Page Name</th>
-                                        <th>CMS URL</th>
+                                        <th>Page ID</th>
                                         <th>Status</th>
                                         <th>Created</th>
                                         <th>Last Updated</th>
@@ -78,11 +78,7 @@
                                             <strong th:text="${page.pageName}">Page Name</strong>
                                         </td>
                                         <td>
-                                            <small class="text-muted" th:text="${#strings.abbreviate(page.cmsUrl, 60)}">CMS URL</small>
-                                            <br>
-                                            <a th:href="${page.cmsUrl}" target="_blank" class="small">
-                                                <i class="fas fa-external-link-alt"></i> Open
-                                            </a>
+                                            <small class="text-muted" th:text="${page.pageId}">Page ID</small>
                                         </td>
                                         <td>
                                             <span class="badge" 
@@ -103,7 +99,7 @@
                                                     <span th:text="${page.active} ? 'Disable' : 'Enable'">Toggle</span>
                                                 </button>
                                                 <button class="btn btn-sm btn-outline-warning" 
-                                                        th:onclick="'editPage(' + ${page.id} + ', \'' + ${page.pageName} + '\', \'' + ${page.cmsUrl} + '\', ' + ${page.active} + ')'">
+                                                        th:onclick="'editPage(' + ${page.id} + ', \'' + ${page.pageName} + '\', \'' + ${page.pageId} + '\', ' + ${page.active} + ')'">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </button>
                                                 <button class="btn btn-sm btn-outline-danger" 
@@ -138,10 +134,10 @@
                                    placeholder="e.g., Homepage, Category Page">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">CMS URL</label>
-                            <input type="url" class="form-control" id="addCmsUrl" required 
-                                   placeholder="https://cms.example.com/api/homepage">
-                            <div class="form-text">URL to fetch banner-product component data</div>
+                            <label class="form-label">Page ID</label>
+                            <input type="text" class="form-control" id="addPageId" required 
+                                   placeholder="/shop/men, /shop/women, /homepage">
+                            <div class="form-text">Page identifier for CMS API (e.g., /shop/men)</div>
                         </div>
                     </form>
                 </div>
@@ -169,8 +165,8 @@
                             <input type="text" class="form-control" id="editPageName" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">CMS URL</label>
-                            <input type="url" class="form-control" id="editCmsUrl" required>
+                            <label class="form-label">Page ID</label>
+                            <input type="text" class="form-control" id="editPageIdField" required>
                         </div>
                         <div class="mb-3">
                             <div class="form-check">
@@ -214,9 +210,9 @@
 
         function submitAddPage() {
             const pageName = document.getElementById('addPageName').value;
-            const cmsUrl = document.getElementById('addCmsUrl').value;
+            const pageId = document.getElementById('addPageId').value;
             
-            if (!pageName || !cmsUrl) {
+            if (!pageName || !pageId) {
                 alert('Please fill in all required fields');
                 return;
             }
@@ -228,7 +224,7 @@
                 },
                 body: JSON.stringify({
                     pageName: pageName,
-                    cmsUrl: cmsUrl
+                    pageId: pageId
                 })
             })
             .then(response => {
@@ -246,10 +242,10 @@
             });
         }
 
-        function editPage(id, pageName, cmsUrl, active) {
+        function editPage(id, pageName, pageId, active) {
             document.getElementById('editPageId').value = id;
             document.getElementById('editPageName').value = pageName;
-            document.getElementById('editCmsUrl').value = cmsUrl;
+            document.getElementById('editPageIdField').value = pageId;
             document.getElementById('editPageActive').checked = active;
             
             new bootstrap.Modal(document.getElementById('editPageModal')).show();
@@ -258,10 +254,10 @@
         function submitEditPage() {
             const id = document.getElementById('editPageId').value;
             const pageName = document.getElementById('editPageName').value;
-            const cmsUrl = document.getElementById('editCmsUrl').value;
+            const pageId = document.getElementById('editPageIdField').value;
             const active = document.getElementById('editPageActive').checked;
             
-            if (!pageName || !cmsUrl) {
+            if (!pageName || !pageId) {
                 alert('Please fill in all required fields');
                 return;
             }
@@ -273,7 +269,7 @@
                 },
                 body: JSON.stringify({
                     pageName: pageName,
-                    cmsUrl: cmsUrl,
+                    pageId: pageId,
                     active: active
                 })
             })
