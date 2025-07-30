@@ -90,20 +90,29 @@
                                         <td>
                                             <div class="btn-group" role="group">
                                                 <button class="btn btn-sm btn-outline-primary" 
-                                                        th:onclick="'runPageScan(\'' + ${page.pageName} + '\')'">
+                                                        th:data-page-name="${page.pageName}"
+                                                        onclick="runPageScan(this.getAttribute('data-page-name'))">
                                                     <i class="fas fa-play"></i> Scan
                                                 </button>
                                                 <button class="btn btn-sm btn-outline-secondary" 
-                                                        th:onclick="'togglePageStatus(' + ${page.id} + ', \'' + ${page.pageName} + '\')'">
+                                                        th:data-page-id="${page.id}"
+                                                        th:data-page-name="${page.pageName}"
+                                                        onclick="togglePageStatus(this.getAttribute('data-page-id'), this.getAttribute('data-page-name'))">
                                                     <i class="fas" th:classappend="${page.active} ? 'fa-pause' : 'fa-play'"></i>
                                                     <span th:text="${page.active} ? 'Disable' : 'Enable'">Toggle</span>
                                                 </button>
                                                 <button class="btn btn-sm btn-outline-warning" 
-                                                        th:onclick="'editPage(' + ${page.id} + ', \'' + ${page.pageName} + '\', \'' + ${page.pageId} + '\', ' + ${page.active} + ')'">
+                                                        th:data-page-id="${page.id}"
+                                                        th:data-page-name="${page.pageName}"
+                                                        th:data-page-page-id="${page.pageId}"
+                                                        th:data-page-active="${page.active}"
+                                                        onclick="editPage(this.getAttribute('data-page-id'), this.getAttribute('data-page-name'), this.getAttribute('data-page-page-id'), this.getAttribute('data-page-active') === 'true')">
                                                     <i class="fas fa-edit"></i> Edit
                                                 </button>
                                                 <button class="btn btn-sm btn-outline-danger" 
-                                                        th:onclick="'deletePage(' + ${page.id} + ', \'' + ${page.pageName} + '\')'">
+                                                        th:data-page-id="${page.id}"
+                                                        th:data-page-name="${page.pageName}"
+                                                        onclick="deletePage(this.getAttribute('data-page-id'), this.getAttribute('data-page-name'))">
                                                     <i class="fas fa-trash"></i> Delete
                                                 </button>
                                             </div>
@@ -286,6 +295,79 @@
                 console.error('Error updating page:', error);
                 showAlert('error', 'Error updating page: ' + error.message);
             });
+        }
+
+        function runPageScan(pageName) {
+            if (confirm(`Run scan for page "${pageName}"?`)) {
+                fetch(`/api/v1/scheduler/run/${encodeURIComponent(pageName)}`, {
+                    method: 'POST'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        showAlert('success', `Scan started for page "${pageName}"`);
+                    } else {
+                        throw new Error('Failed to start scan');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error starting scan:', error);
+                    showAlert('error', 'Error starting scan: ' + error.message);
+                });
+            }
+        }
+
+        function togglePageStatus(pageId, pageName) {
+            fetch(`/api/v1/scheduler/pages/${pageId}/toggle`, {
+                method: 'POST'
+            })
+            .then(response => {
+                if (response.ok) {
+                    showAlert('success', `Page "${pageName}" status toggled successfully`);
+                    setTimeout(() => window.location.reload(), 1500);
+                } else {
+                    throw new Error('Failed to toggle page status');
+                }
+            })
+            .catch(error => {
+                console.error('Error toggling page status:', error);
+                showAlert('error', 'Error toggling page status: ' + error.message);
+            });
+        }
+
+        function deletePage(pageId, pageName) {
+            if (confirm(`Are you sure you want to delete page "${pageName}"?`)) {
+                fetch(`/api/v1/scheduler/pages/${pageId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        showAlert('success', `Page "${pageName}" deleted successfully`);
+                        setTimeout(() => window.location.reload(), 1500);
+                    } else {
+                        throw new Error('Failed to delete page');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting page:', error);
+                    showAlert('error', 'Error deleting page: ' + error.message);
+                });
+            }
+        }
+
+        function showAlert(type, message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.querySelector('.container-fluid').insertBefore(alertDiv, document.querySelector('.container-fluid').firstChild);
+            
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
         }
     </script>
 </body>
