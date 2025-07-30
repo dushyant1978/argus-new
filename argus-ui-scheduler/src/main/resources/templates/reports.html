@@ -139,7 +139,8 @@
                                                 <i class="fas fa-eye"></i> Details
                                             </a>
                                             <button class="btn btn-sm btn-outline-secondary ms-1" 
-                                                    th:onclick="'runPageScan(\'' + ${report.pageName} + '\')'">
+                                                    th:data-page-name="${report.pageName}"
+                                                    onclick="runPageScan(this.getAttribute('data-page-name'))">
                                                 <i class="fas fa-sync"></i> Rescan
                                             </button>
                                         </td>
@@ -169,5 +170,41 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/dashboard.js"></script>
+    <script>
+        function runPageScan(pageName) {
+            if (confirm(`Run scan for page "${pageName}"?`)) {
+                fetch(`/api/v1/scheduler/run/${encodeURIComponent(pageName)}`, {
+                    method: 'POST'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        showAlert('success', `Scan started for page "${pageName}"`);
+                    } else {
+                        throw new Error('Failed to start scan');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error starting scan:', error);
+                    showAlert('error', 'Error starting scan: ' + error.message);
+                });
+            }
+        }
+
+        function showAlert(type, message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.querySelector('.container-fluid').insertBefore(alertDiv, document.querySelector('.container-fluid').firstChild);
+            
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+    </script>
 </body>
 </html>
