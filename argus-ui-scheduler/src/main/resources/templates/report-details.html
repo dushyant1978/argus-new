@@ -145,40 +145,45 @@
                                 <tbody>
                                     <tr th:each="detail : ${reportDetails}">
                                         <td>
-                                            <span class="badge bg-primary" th:text="${detail.componentType}">Component Type</span>
+                                            <span class="badge bg-primary" th:text="${detail?.componentType ?: 'Unknown'}">Component Type</span>
                                         </td>
                                         <td>
-                                            <a th:href="${detail.bannerURL}" target="_blank" class="text-decoration-none">
-                                                <i class="fas fa-external-link-alt"></i>
-                                                <span th:text="${#strings.abbreviate(detail.bannerURL, 50)}">Banner URL</span>
-                                            </a>
+                                            <span th:if="${detail?.bannerURL}">
+                                                <a th:href="${detail.bannerURL}" target="_blank" class="text-decoration-none">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                    <span th:text="${#strings.abbreviate(detail.bannerURL, 50)}">Banner URL</span>
+                                                </a>
+                                            </span>
+                                            <span th:unless="${detail?.bannerURL}" class="text-muted">
+                                                <i class="fas fa-link-slash"></i> No URL
+                                            </span>
                                         </td>
                                         <td>
-                                            <code th:text="${detail.curatedId}">Curated ID</code>
+                                            <code th:text="${detail?.curatedId ?: 'N/A'}">Curated ID</code>
                                         </td>
                                         <td>
-                                            <span th:if="${detail.error}" class="text-danger">
+                                            <span th:if="${detail?.error}" class="text-danger">
                                                 <i class="fas fa-exclamation-triangle"></i> Error: <span th:text="${detail.error}">Error</span>
                                             </span>
-                                            <span th:unless="${detail.error}">
+                                            <span th:unless="${detail?.error}">
                                                 <span class="badge" 
-                                                      th:classappend="${detail.anomalyResult?.anomalyType == 'HIGH'} ? 'bg-danger' : (${detail.anomalyResult?.anomalyType == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
-                                                      th:text="${detail.anomalyResult?.anomalyType ?: 'N/A'}">Anomaly Type</span>
+                                                      th:classappend="${detail?.anomalyResult?.anomalyType == 'HIGH'} ? 'bg-danger' : (${detail?.anomalyResult?.anomalyType == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
+                                                      th:text="${detail?.anomalyResult?.anomalyType ?: 'N/A'}">Anomaly Type</span>
                                             </span>
                                         </td>
                                         <td>
-                                            <span th:if="${detail.error}" class="text-danger">
+                                            <span th:if="${detail?.error}" class="text-danger">
                                                 <span class="badge bg-danger">ERROR</span>
                                             </span>
-                                            <span th:unless="${detail.error}">
+                                            <span th:unless="${detail?.error}">
                                                 <span class="badge" 
-                                                      th:classappend="${detail.anomalyResult?.severity == 'HIGH'} ? 'bg-danger' : (${detail.anomalyResult?.severity == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
-                                                      th:text="${detail.anomalyResult?.severity ?: 'N/A'}">Severity</span>
+                                                      th:classappend="${detail?.anomalyResult?.severity == 'HIGH'} ? 'bg-danger' : (${detail?.anomalyResult?.severity == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
+                                                      th:text="${detail?.anomalyResult?.severity ?: 'N/A'}">Severity</span>
                                             </span>
                                         </td>
                                         <td>
-                                            <span th:if="${detail.error}" class="text-danger" th:text="${detail.error}">Error Description</span>
-                                            <span th:unless="${detail.error}" th:text="${detail.anomalyResult?.description ?: 'No description available'}">Description</span>
+                                            <span th:if="${detail?.error}" class="text-danger" th:text="${detail.error}">Error Description</span>
+                                            <span th:unless="${detail?.error}" th:text="${detail?.anomalyResult?.description ?: 'No description available'}">Description</span>
                                         </td>
                                     </tr>
                                 </tbody>
