@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card" th:classappend="${coreServiceHealthy} ? 'bg-success' : 'bg-danger'" class="text-white">
+                <div class="card text-white" th:classappend="${coreServiceHealthy} ? 'bg-success' : 'bg-danger'">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div>
@@ -84,7 +84,7 @@
                                 <h5 th:text="${coreServiceHealthy} ? 'Healthy' : 'Down'">Status</h5>
                             </div>
                             <div class="align-self-center">
-                                <i class="fas" th:classappend="${coreServiceHealthy} ? 'fa-check-circle' : 'fa-times-circle'" class="fa-2x"></i>
+                                <i class="fas fa-2x" th:classappend="${coreServiceHealthy} ? 'fa-check-circle' : 'fa-times-circle'"></i>
                             </div>
                         </div>
                     </div>

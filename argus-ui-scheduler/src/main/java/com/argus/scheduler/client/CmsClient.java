@@ -83,6 +83,7 @@ public class CmsClient {
     }
 
     private List<ComponentInfo> parseCmsResponse(String response) {
+       logger.info("Parsing CMS response: {}", response);
         try {
             JsonNode rootNode = objectMapper.readTree(response);
             List<ComponentInfo> components = new ArrayList<>();
