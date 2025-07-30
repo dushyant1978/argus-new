@@ -148,26 +148,37 @@
                                             <span class="badge bg-primary" th:text="${detail.componentType}">Component Type</span>
                                         </td>
                                         <td>
-                                            <a th:href="${detail.bannerUrl}" target="_blank" class="text-decoration-none">
+                                            <a th:href="${detail.bannerURL}" target="_blank" class="text-decoration-none">
                                                 <i class="fas fa-external-link-alt"></i>
-                                                <span th:text="${#strings.abbreviate(detail.bannerUrl, 50)}">Banner URL</span>
+                                                <span th:text="${#strings.abbreviate(detail.bannerURL, 50)}">Banner URL</span>
                                             </a>
                                         </td>
                                         <td>
                                             <code th:text="${detail.curatedId}">Curated ID</code>
                                         </td>
                                         <td>
-                                            <span class="badge" 
-                                                  th:classappend="${detail.anomalyType == 'HIGH'} ? 'bg-danger' : (${detail.anomalyType == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
-                                                  th:text="${detail.anomalyType}">Anomaly Type</span>
+                                            <span th:if="${detail.error}" class="text-danger">
+                                                <i class="fas fa-exclamation-triangle"></i> Error: <span th:text="${detail.error}">Error</span>
+                                            </span>
+                                            <span th:unless="${detail.error}">
+                                                <span class="badge" 
+                                                      th:classappend="${detail.anomalyResult?.anomalyType == 'HIGH'} ? 'bg-danger' : (${detail.anomalyResult?.anomalyType == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
+                                                      th:text="${detail.anomalyResult?.anomalyType ?: 'N/A'}">Anomaly Type</span>
+                                            </span>
                                         </td>
                                         <td>
-                                            <span class="badge" 
-                                                  th:classappend="${detail.severity == 'HIGH'} ? 'bg-danger' : (${detail.severity == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
-                                                  th:text="${detail.severity}">Severity</span>
+                                            <span th:if="${detail.error}" class="text-danger">
+                                                <span class="badge bg-danger">ERROR</span>
+                                            </span>
+                                            <span th:unless="${detail.error}">
+                                                <span class="badge" 
+                                                      th:classappend="${detail.anomalyResult?.severity == 'HIGH'} ? 'bg-danger' : (${detail.anomalyResult?.severity == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
+                                                      th:text="${detail.anomalyResult?.severity ?: 'N/A'}">Severity</span>
+                                            </span>
                                         </td>
                                         <td>
-                                            <span th:text="${detail.description}">Description</span>
+                                            <span th:if="${detail.error}" class="text-danger" th:text="${detail.error}">Error Description</span>
+                                            <span th:unless="${detail.error}" th:text="${detail.anomalyResult?.description ?: 'No description available'}">Description</span>
                                         </td>
                                     </tr>
                                 </tbody>
