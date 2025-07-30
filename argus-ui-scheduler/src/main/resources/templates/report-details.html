@@ -137,9 +137,9 @@
                                         <th>Component Type</th>
                                         <th>Banner URL</th>
                                         <th>Curated ID</th>
-                                        <th>Anomaly Type</th>
-                                        <th>Severity</th>
-                                        <th>Description</th>
+                                        <th>Anomalies</th>
+                                        <th>Status</th>
+                                        <th>Details</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -167,8 +167,8 @@
                                             </span>
                                             <span th:unless="${detail.containsKey('error')}">
                                                 <span class="badge" 
-                                                      th:classappend="${detail?.anomalyResult?.anomalyType == 'HIGH'} ? 'bg-danger' : (${detail?.anomalyResult?.anomalyType == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
-                                                      th:text="${detail?.anomalyResult?.anomalyType ?: 'N/A'}">Anomaly Type</span>
+                                                      th:classappend="${detail?.anomalyResult?.totalAnomalies > 0} ? 'bg-danger' : 'bg-success'"
+                                                      th:text="${detail?.anomalyResult?.totalAnomalies ?: '0'}">Anomalies</span>
                                             </span>
                                         </td>
                                         <td>
@@ -177,13 +177,29 @@
                                             </span>
                                             <span th:unless="${detail.containsKey('error')}">
                                                 <span class="badge" 
-                                                      th:classappend="${detail?.anomalyResult?.severity == 'HIGH'} ? 'bg-danger' : (${detail?.anomalyResult?.severity == 'MEDIUM'} ? 'bg-warning' : 'bg-info')"
-                                                      th:text="${detail?.anomalyResult?.severity ?: 'N/A'}">Severity</span>
+                                                      th:classappend="${detail?.anomalyResult?.status == 'success'} ? 'bg-success' : 'bg-warning'"
+                                                      th:text="${detail?.anomalyResult?.status ?: 'N/A'}">Status</span>
                                             </span>
                                         </td>
                                         <td>
                                             <span th:if="${detail.containsKey('error')}" class="text-danger" th:text="${detail.error}">Error Description</span>
-                                            <span th:unless="${detail.containsKey('error')}" th:text="${detail?.anomalyResult?.description ?: 'No description available'}">Description</span>
+                                            <span th:unless="${detail.containsKey('error')}">
+                                                <span th:if="${detail?.anomalyResult?.anomalies}">
+                                                    <div th:each="anomaly, iterStat : ${detail.anomalyResult.anomalies}" th:if="${iterStat.index < 2}">
+                                                        <small class="text-muted">
+                                                            <strong th:text="${anomaly.brandName}">Brand</strong>: 
+                                                            <span th:text="${anomaly.discountPercent}">0</span>% off
+                                                        </small>
+                                                        <br th:if="${!iterStat.last}">
+                                                    </div>
+                                                    <span th:if="${detail.anomalyResult.anomalies.size() > 2}" class="text-muted">
+                                                        <small>+<span th:text="${detail.anomalyResult.anomalies.size() - 2}">0</span> more</small>
+                                                    </span>
+                                                </span>
+                                                <span th:unless="${detail?.anomalyResult?.anomalies}" class="text-muted">
+                                                    No anomalies detected
+                                                </span>
+                                            </span>
                                         </td>
                                     </tr>
                                 </tbody>
