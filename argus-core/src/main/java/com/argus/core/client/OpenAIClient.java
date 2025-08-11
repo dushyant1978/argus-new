@@ -28,7 +28,7 @@ public class OpenAIClient {
     private final ObjectMapper objectMapper;
     
     // Use placeholders for OpenAI API key and endpoint
-    private static final String OPENAI_API_KEY = "YOUR_OPENAI_API_KEY";
+    private static final String OPENAI_API_KEY = "sk-5_uOMfVJvZELiQ7WO3mE2Q";
     private static final String OPENAI_API_URL = "https://llm-gateway.fynd.engineering/v1/chat/completions";
 
     public OpenAIClient(WebClient.Builder webClientBuilder, ObjectMapper objectMapper) {

@@ -98,6 +98,10 @@ public class SchedulerService {
                     }
                     
                     componentReports.add(componentReport);
+
+                    if(componentReports.size() > 3){
+                        break;
+                    }
                     
                 } catch (Exception e) {
                     logger.error("Error scanning component {}: {}", component.getBannerURL(), e.getMessage());

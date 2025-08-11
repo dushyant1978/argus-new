@@ -33,7 +33,7 @@ public class ArgusCoreClient {
     public JsonNode detectAnomalies(String bannerURL, String curatedId) {
         try {
             logger.info("Calling argus-core for anomaly detection: bannerURL={}, curatedId={}", bannerURL, curatedId);
-            
+
             Map<String, Object> request = Map.of(
                     "bannerURL", bannerURL,
                     "curatedId", curatedId
