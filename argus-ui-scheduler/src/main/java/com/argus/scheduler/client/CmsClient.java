@@ -83,7 +83,7 @@ public class CmsClient {
     }
 
     private List<ComponentInfo> parseCmsResponse(String response) {
-        logger.info("Parsing CMS response: {}", response);
+
         try {
             JsonNode rootNode = objectMapper.readTree(response);
             List<ComponentInfo> components = new ArrayList<>();
@@ -111,8 +111,7 @@ public class CmsClient {
                             if (hotspotsNode.isArray() && !hotspotsNode.isEmpty()) {
                                 // Take the first hotspot's hotspotUrl as curatedId
                                 String curatedId = hotspotsNode.get(0).path("hotspotUrl").asText();
-                                
-                                if (!bannerUrl.isEmpty() && !curatedId.isEmpty()) {
+                                if (!bannerUrl.isEmpty() && !curatedId.isEmpty() && curatedId.contains("/s/")) {
                                     components.add(new ComponentInfo(bannerUrl, curatedId, componentName));
                                     logger.debug("Added component: bannerUrl={}, curatedId={}, componentType={}", 
                                                bannerUrl, curatedId, componentName);

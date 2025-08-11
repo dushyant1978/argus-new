@@ -147,11 +147,11 @@ function togglePageStatus(pageId, pageName) {
 }
 
 function addNewPage() {
-    const pageName = prompt('Enter page name:');
+    const pageName = prompt('Enter Page Name:');
     if (!pageName) return;
     
-    const cmsUrl = prompt('Enter CMS URL:');
-    if (!cmsUrl) return;
+    const pageId = prompt('Enter Page ID:');
+    if (!pageId) return;
     
     fetch('/api/v1/scheduler/pages', {
         method: 'POST',
@@ -160,7 +160,7 @@ function addNewPage() {
         },
         body: JSON.stringify({
             pageName: pageName,
-            cmsUrl: cmsUrl
+            pageId: pageId
         })
     })
     .then(response => {
